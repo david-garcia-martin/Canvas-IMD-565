@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ITMD-565 Lab 4 - Canvas Drawing</title>
+	<style type="text/css">
+		#content-wrapper {
+			width: 600px;
+			margin: 0 auto;
+			text-align: center;
+		}
+		#canvasRun {
+			background-color: #c00;
+			border: 0;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div id="content-wrapper">
+		<button id="canvasRun">Draw Canvas</button><br><br>
+		<canvas id="myCanvas" width="600" height="450"></canvas>
+	</div>
+	<script type="text/javascript">
+		document.getElementById('canvasRun').addEventListener('click', function(){
+			document.getElementById("canvasRun").disabled = true;
+			var canvas = document.getElementById('myCanvas');
+			var angle = 0;
+			if (canvas.getContext) {
+			window.requestAnimationFrame(draw);
+		}
+
+		function draw(){
+			//Background gradient creation
+			var canvas = document.getElementById('myCanvas');
+			var ctx = canvas.getContext("2d");
+			var grd = ctx.createLinearGradient(0,0,0,canvas.height);
+			grd.addColorStop(0,"white");
+			grd.addColorStop(1,"black");
+			ctx.fillStyle = grd;
+			ctx.fillRect(0,0,canvas.width,canvas.height);
+
+			//Text including the title
+			ctx.font = "32px Sans-Serif";
+			ctx.fillStyle = "#C80000";
+			ctx.textAlign = "center";
+			ctx.fillText("ITMD 565 Canvas Lab", canvas.width/2,canvas.height/8);
+			ctx.beginPath();
+			ctx.moveTo(canvas.width/15, canvas.height/5.6);
+			ctx.lineTo(canvas.width/1.05, canvas.height/5.6);
+			ctx.strokeStyle = "#C80000";
+			ctx.lineWidth = 4;
+			ctx.stroke();
+			ctx.closePath();
+
+			//Text including my name
+			ctx.font = "14px Sans-Serif";
+			ctx.fillStyle = "white";
+			ctx.textAlign = "left";
+			ctx.fillText("David Garcia Martin", canvas.width/20, canvas.height/1.09);
+			ctx.fillText("dgarciamartin@hawk.iit.edu", canvas.width/20, canvas.height/1.05);
+
+			//Image of IIT logo
+			var image = new Image();
+			image.src = "IIT_SAT_stack_186_white.png";
+			ctx.drawImage(image, canvas.width/1.85, canvas.height/1.23,250,65);
+			
+			//Drawing the circle
+			ctx.beginPath();
+			ctx.arc(canvas.width/6, canvas.height/2.8,50,0,2 * Math.PI);
+			ctx.strokeStyle = "white";
+			ctx.fillStyle = "#0000C8";
+			ctx.lineWidth=5;
+			ctx.stroke()
+			ctx.fill()
+			ctx.closePath();
+
+			//Drawing the triangle
+			ctx.beginPath();
+			ctx.moveTo(canvas.width/6, canvas.height/1.8);
+			ctx.lineTo(canvas.width/12, canvas.height/1.3);
+			ctx.lineTo(canvas.width/4, canvas.height/1.3);
+			ctx.fillStyle = "#00C800";
+			ctx.fill();
+			ctx.closePath();
+
+			//Drawing the quadratic curve
+			ctx.beginPath();
+			ctx.fillStyle="white";
+			ctx.fillRect(canvas.width/2.2, canvas.height/1.8,304,100);
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.moveTo(canvas.width/2, canvas.height/1.47);
+			ctx.quadraticCurveTo(365,250,430,305);
+			ctx.quadraticCurveTo(495,365,558,305);
+			ctx.lineWidth = 2;
+			ctx.strokeStyle = 'black';
+			ctx.setLineDash([5]);
+			ctx.stroke();
+			ctx.closePath();
+
+			//Drawing the square
+			ctx.translate(canvas.width/1.28,canvas.height/2.7);
+			ctx.rotate(angle*(1/2));
+			ctx.beginPath();
+			ctx.setLineDash([])
+			ctx.rect(-54,-54, 108, 108);
+			ctx.fillStyle ='#C80000';
+			ctx.fill();
+			ctx.lineWidth = 5;
+			ctx.strokeStyle = 'white';
+			ctx.stroke();
+			ctx.setTransform(1, 0, 0, 1, 0, 0);
+			angle += (Math.PI/180);
+			ctx.closePath();
+
+			//Drawing the arc
+			ctx.beginPath();
+			ctx.arc(canvas.width/2.1, canvas.height/2.8, 50,((Math.PI/180)*100+angle*5), (((Math.PI/180)*270)+angle*5),true);
+			ctx.lineWidth = 14;
+			ctx.strokeStyle = '#FFA500';
+			ctx.stroke();
+			ctx.closePath();
+
+			window.requestAnimationFrame(draw);
+	}
+});
+	</script>
+</body>
+</html>
